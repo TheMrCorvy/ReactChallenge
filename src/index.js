@@ -7,6 +7,11 @@ import reducers from "./reducers"
 import reportWebVitals from "./reportWebVitals"
 import getStore from "./store/getStore"
 
+import "@fontsource/roboto/300.css"
+import "@fontsource/roboto/400.css"
+import "@fontsource/roboto/500.css"
+import "@fontsource/roboto/700.css"
+
 // import main sass file
 import "./sass/app.scss"
 
