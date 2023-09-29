@@ -1,10 +1,12 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 
 import Grid from "@mui/material/Grid"
 
 import styles from "./Month.module.css"
 
 function Month() {
+	const [dates, setDates] = useState([])
+
 	function getDatesInReverse(year, month, amountOfDays) {
 		const lastDayOfMonth = new Date(year, month, 0).getDate()
 		const datesInReverse = []
@@ -27,9 +29,8 @@ function Month() {
 
 		const currentYear = currentDate.getFullYear()
 		const currentMonth = currentDate.getMonth() // Months are zero-based, so add 1 to get the current month.
-		const today = currentDate.getDate()
 
-		const daysInMonth = new Date(currentYear, currentMonth, 0).getDate()
+		const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate()
 
 		const daysOfWeek = [
 			"Sunday",
@@ -40,17 +41,10 @@ function Month() {
 			"Friday",
 			"Saturday",
 		]
-		let listOfDates = [
-			/**
-			 * {
-			 * 		number: number
-			 * 		dayLabel: uno de los del array
-			 * }
-			 */
-		]
+		let listOfDates = []
 
-		for (let day = 1; day < daysInMonth; day++) {
-			const date = new Date(currentYear, currentMonth, day) // Months are zero-based, so subtract 1 from the month.
+		for (let day = 1; day <= daysInMonth; day++) {
+			const date = new Date(currentYear, currentMonth, day)
 			listOfDates.push({
 				number: day,
 				dayLabel: daysOfWeek[date.getDay()],
@@ -64,127 +58,36 @@ function Month() {
 			lastDaysInReverse.forEach((day) => listOfDates.unshift(day))
 		}
 
-		console.log({
-			currentYear,
-			currentMonth,
-			today,
-			daysInMonth,
-			listOfDates,
-		})
+		if (listOfDates[listOfDates.length - 1].dayLabel !== daysOfWeek[6]) {
+			const currentMonthIndex = daysOfWeek.indexOf(listOfDates[listOfDates.length - 1].dayLabel) // saturday
+
+			let newDay = 1
+			for (let day = currentMonthIndex + 1; day < daysOfWeek.length; day++) {
+				listOfDates.push({
+					number: newDay,
+					dayLabel: daysOfWeek[day],
+				})
+
+				newDay++
+			}
+		}
+
+		setDates(listOfDates)
 	}, [])
 
 	return (
-		<Grid container spacing={0.5} sx={{ height: "90vh" }}>
+		<Grid container spacing={0} sx={{ height: "90vh" }}>
 			<Grid item xs sx={{ maxWidth: "12.5vw", border: "1px solid", background: "red" }}>
 				calendario chiquito
 			</Grid>
 			<Grid item xs className={styles.month_layout_column}>
-				<Grid container spacing={0.5}>
-					<Grid item xs className={styles.month_layout_cell}>
-						1
-					</Grid>
-					<Grid item xs className={styles.month_layout_cell}>
-						2
-					</Grid>
-					<Grid item xs className={styles.month_layout_cell}>
-						1
-					</Grid>
-					<Grid item xs className={styles.month_layout_cell}>
-						2
-					</Grid>
-					<Grid item xs className={styles.month_layout_cell}>
-						1
-					</Grid>
-					<Grid item xs className={styles.month_layout_cell}>
-						2
-					</Grid>
-					<Grid item xs className={styles.month_layout_cell}>
-						1
-					</Grid>
-					<Grid item xs className={styles.month_layout_cell}>
-						1
-					</Grid>
-					<Grid item xs className={styles.month_layout_cell}>
-						2
-					</Grid>
-					<Grid item xs className={styles.month_layout_cell}>
-						1
-					</Grid>
-					<Grid item xs className={styles.month_layout_cell}>
-						2
-					</Grid>
-					<Grid item xs className={styles.month_layout_cell}>
-						1
-					</Grid>
-					<Grid item xs className={styles.month_layout_cell}>
-						2
-					</Grid>
-					<Grid item xs className={styles.month_layout_cell}>
-						1
-					</Grid>
-					<Grid item xs className={styles.month_layout_cell}>
-						1
-					</Grid>
-					<Grid item xs className={styles.month_layout_cell}>
-						2
-					</Grid>
-					<Grid item xs className={styles.month_layout_cell}>
-						1
-					</Grid>
-					<Grid item xs className={styles.month_layout_cell}>
-						2
-					</Grid>
-					<Grid item xs className={styles.month_layout_cell}>
-						1
-					</Grid>
-					<Grid item xs className={styles.month_layout_cell}>
-						2
-					</Grid>
-					<Grid item xs className={styles.month_layout_cell}>
-						1
-					</Grid>
-					<Grid item xs className={styles.month_layout_cell}>
-						1
-					</Grid>
-					<Grid item xs className={styles.month_layout_cell}>
-						2
-					</Grid>
-					<Grid item xs className={styles.month_layout_cell}>
-						1
-					</Grid>
-					<Grid item xs className={styles.month_layout_cell}>
-						2
-					</Grid>
-					<Grid item xs className={styles.month_layout_cell}>
-						1
-					</Grid>
-					<Grid item xs className={styles.month_layout_cell}>
-						2
-					</Grid>
-					<Grid item xs className={styles.month_layout_cell}>
-						1
-					</Grid>
-					<Grid item xs className={styles.month_layout_cell}>
-						1
-					</Grid>
-					<Grid item xs className={styles.month_layout_cell}>
-						2
-					</Grid>
-					<Grid item xs className={styles.month_layout_cell}>
-						1
-					</Grid>
-					<Grid item xs className={styles.month_layout_cell}>
-						2
-					</Grid>
-					<Grid item xs className={styles.month_layout_cell}>
-						1
-					</Grid>
-					<Grid item xs className={styles.month_layout_cell}>
-						2
-					</Grid>
-					<Grid item xs className={styles.month_layout_cell}>
-						1
-					</Grid>
+				<Grid container spacing={0}>
+					{dates &&
+						dates.map((date, i) => (
+							<Grid item xs className={styles.month_layout_cell} key={"monthly_layout_cell_" + i}>
+								{date.number} {date.dayLabel}
+							</Grid>
+						))}
 				</Grid>
 			</Grid>
 		</Grid>
