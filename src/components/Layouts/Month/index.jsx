@@ -8,6 +8,8 @@ import Stack from "@mui/material/Stack"
 
 import styles from "./Month.module.css"
 
+const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+
 function Month() {
 	const [dates, setDates] = useState([])
 
@@ -36,15 +38,6 @@ function Month() {
 
 		const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate()
 
-		const daysOfWeek = [
-			"Sunday",
-			"Monday",
-			"Tuesday",
-			"Wednesday",
-			"Thursday",
-			"Friday",
-			"Saturday",
-		]
 		let listOfDates = []
 
 		for (let day = 1; day <= daysInMonth; day++) {
@@ -83,6 +76,20 @@ function Month() {
 
 	return (
 		<Grid container spacing={0} className={styles.month_layout_column}>
+			<Grid item xs={12}>
+				<Grid container spacing={0}>
+					{daysOfWeek.map((day, i) => (
+						<Grid
+							item
+							className={styles.month_layout_cell}
+							key={"monthly_layout_cell_title_" + i}
+							sx={{ display: { xs: "none", sm: "none", md: "block" } }}
+						>
+							<h3>{day}</h3>
+						</Grid>
+					))}
+				</Grid>
+			</Grid>
 			{dates &&
 				dates.map((date, i) => (
 					<Grid item xs className={styles.month_layout_cell} key={"monthly_layout_cell_" + i}>
