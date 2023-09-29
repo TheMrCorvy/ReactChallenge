@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react"
 
 import Grid from "@mui/material/Grid"
+import Button from "@mui/material/Button"
+import Alert from "@mui/material/Alert"
+import Stack from "@mui/material/Stack"
 
 import styles from "./Month.module.css"
 
@@ -45,9 +48,11 @@ function Month() {
 
 		for (let day = 1; day <= daysInMonth; day++) {
 			const date = new Date(currentYear, currentMonth, day)
+
 			listOfDates.push({
 				number: day,
 				dayLabel: daysOfWeek[date.getDay()],
+				isToday: date.getDate() === new Date().getDate(),
 			})
 		}
 
@@ -85,7 +90,40 @@ function Month() {
 					{dates &&
 						dates.map((date, i) => (
 							<Grid item xs className={styles.month_layout_cell} key={"monthly_layout_cell_" + i}>
-								{date.number} {date.dayLabel}
+								<div>
+									{date.isToday ? (
+										<>
+											<Button
+												color="primary"
+												variant="contained"
+												size="small"
+												sx={{ marginBottom: 0 }}
+											>
+												{date.number}
+											</Button>
+										</>
+									) : (
+										<p>{date.number}</p>
+									)}
+								</div>
+								<Stack sx={{ width: "100%", mt: date.isToday ? "5px" : null }} spacing={0}>
+									<Alert icon={false} severity="error" className={styles.no_pading}>
+										<span style={{ padding: 0 }}>
+											texto de prueba para ver realmente que tan largo alcanza a ser el alert
+										</span>
+									</Alert>
+									<Alert icon={false} severity="error">
+										This is an error alert
+									</Alert>
+									<Alert icon={false} severity="error" className={styles.no_pading}>
+										<span style={{ padding: 0 }}>
+											texto de prueba para ver realmente que tan largo alcanza a ser el alert
+										</span>
+									</Alert>
+									<Alert icon={false} severity="error">
+										This is an error alert
+									</Alert>
+								</Stack>
 							</Grid>
 						))}
 				</Grid>
