@@ -1,12 +1,16 @@
 import { Link } from "react-router-dom"
 
-import MenuIcon from "@mui/icons-material/Menu"
+import HomeIcon from "@mui/icons-material/Home"
+import ViewWeekIcon from "@mui/icons-material/ViewWeek"
+import ViewDayIcon from "@mui/icons-material/ViewDay"
+import ViewModuleIcon from "@mui/icons-material/ViewModule" // month
+
 import AppBar from "@mui/material/AppBar"
 import Box from "@mui/material/Box"
-import Button from "@mui/material/Button"
 import IconButton from "@mui/material/IconButton"
 import Toolbar from "@mui/material/Toolbar"
 import Typography from "@mui/material/Typography"
+import Tooltip from "@mui/material/Tooltip"
 
 import styles from "./Navbar.module.css"
 
@@ -15,11 +19,19 @@ export default function ButtonAppBar() {
 		<Box sx={{ flexGrow: 1 }}>
 			<AppBar position="static">
 				<Toolbar>
-					<IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
-						<MenuIcon />
-					</IconButton>
+					<Link to="/" className={styles.link}>
+						<IconButton
+							size="large"
+							edge="start"
+							color="inherit"
+							aria-label="menu"
+							sx={{ mr: 2, color: "inherit" }}
+						>
+							<HomeIcon />
+						</IconButton>
+					</Link>
 					<Typography
-						variant="h6"
+						variant="h5"
 						noWrap
 						href="/"
 						sx={{
@@ -29,11 +41,23 @@ export default function ButtonAppBar() {
 							color: "inherit",
 						}}
 					>
-						<Link to="/" className={styles.navbar_xl}>
-							HOME
-						</Link>
+						September 2023
 					</Typography>
-					<Button color="inherit">Login</Button>
+					<Tooltip title="Show Day">
+						<IconButton size="large" color="inherit">
+							<ViewDayIcon />
+						</IconButton>
+					</Tooltip>
+					<Tooltip title="Show Week">
+						<IconButton size="large" color="inherit">
+							<ViewWeekIcon />
+						</IconButton>
+					</Tooltip>
+					<Tooltip title="Show Month">
+						<IconButton size="large" color="inherit">
+							<ViewModuleIcon />
+						</IconButton>
+					</Tooltip>
 				</Toolbar>
 			</AppBar>
 		</Box>
