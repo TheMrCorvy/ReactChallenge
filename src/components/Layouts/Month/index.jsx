@@ -5,6 +5,23 @@ import Grid from "@mui/material/Grid"
 import styles from "./Month.module.css"
 
 function Month() {
+	function getDatesInReverse(year, month, amountOfDays) {
+		const lastDayOfMonth = new Date(year, month, 0).getDate()
+		const datesInReverse = []
+
+		for (let day = lastDayOfMonth; day >= lastDayOfMonth - amountOfDays; day--) {
+			const date = new Date(year, month - 1, day) // Months are zero-based, so subtract 1 from the month.
+			const dayOfWeek = date.toLocaleString("en-US", { weekday: "long" })
+
+			datesInReverse.push({
+				number: day,
+				dayLabel: dayOfWeek,
+			})
+		}
+
+		return datesInReverse
+	}
+
 	useEffect(() => {
 		const currentDate = new Date()
 
@@ -38,6 +55,13 @@ function Month() {
 				number: day,
 				dayLabel: daysOfWeek[date.getDay()],
 			})
+		}
+
+		if (listOfDates[0].dayLabel !== daysOfWeek[0]) {
+			const remainingDays = daysOfWeek.indexOf(listOfDates[0].dayLabel)
+			const lastDaysInReverse = getDatesInReverse(currentYear, currentMonth, remainingDays - 1)
+
+			lastDaysInReverse.forEach((day) => listOfDates.unshift(day))
 		}
 
 		console.log({
