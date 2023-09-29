@@ -1,9 +1,9 @@
-import React from "react";
+import React from "react"
 
-import Routes from "./routes";
+import Routes from "./routes"
 
 function Main() {
-  return <Routes />;
+	return <Routes />
 }
 
-export default Main;
+export default Main
