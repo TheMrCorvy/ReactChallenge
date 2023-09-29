@@ -1,12 +1,13 @@
-import React from "react"
+import Navbar from "../components/Navbar"
 
 function Calendar(props) {
-	// your calendar implementation Goes here!
-	// Be creative
 	return (
-		<div className="container">
-			<h1>Calendar</h1>
-		</div>
+		<>
+			<Navbar />
+			<div className="container bg-secondary">
+				<h1 className="h6">Calendar</h1>
+			</div>
+		</>
 	)
 }
 

@@ -1,0 +1,7 @@
+.navbar_xl{
+    margin-right: 16px;
+    letter-spacing: 0.3rem;
+    color: inherit;
+    text-decoration: none;
+    flex-grow: 1;
+}
