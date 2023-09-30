@@ -16,7 +16,7 @@ import useDatesList from "../../hooks/useDatesList"
 const MiniCalendar = () => {
 	const [weeks, setWeeks] = useState([])
 
-	const { datesList, daysOfWeek } = useDatesList()
+	const { datesList, daysOfWeek, monthsOfYear, selectedDate, setSelectedDate } = useDatesList()
 	const theme = useTheme()
 
 	useEffect(() => {
@@ -31,6 +31,19 @@ const MiniCalendar = () => {
 		}
 
 		setWeeks(weeksArr)
+	}
+
+	const moveToLastMonth = () => {
+		const newMonth = selectedDate.currentMonth - 1 < 0 ? 11 : selectedDate.currentMonth - 1
+		const newYear = newMonth === 11 ? selectedDate.currentYear - 1 : selectedDate.currentYear
+
+		const newDate = new Date(newYear, newMonth, 1)
+
+		setSelectedDate({
+			currentDate: newDate,
+			currentMonth: newMonth,
+			currentYear: newYear,
+		})
 	}
 
 	const miniDay = (day) => (
@@ -60,6 +73,51 @@ const MiniCalendar = () => {
 
 	return (
 		<Grid container>
+			<Grid item xs={12}>
+				<Grid container direction="row" spacing={0}>
+					<Grid
+						item
+						xs={3}
+						container
+						direction="row"
+						justify="flex-end"
+						alignItems="center"
+						spacing={0}
+						wrap="nowrap"
+						sx={{
+							mr: 0.5,
+						}}
+					>
+						<Tooltip sx={{ mt: 2 }} title="Previous Month">
+							<IconButton size="small" onClick={moveToLastMonth}>
+								<ChevronLeftIcon />
+							</IconButton>
+						</Tooltip>{" "}
+						<Tooltip sx={{ mt: 2 }} title="Next Month">
+							<IconButton size="small">
+								<ChevronRightIcon />
+							</IconButton>
+						</Tooltip>
+					</Grid>
+					<Grid
+						item
+						xs={8}
+						sx={{
+							textAlign: "center",
+							verticalAlign: "bottom",
+							alignItems: "end",
+							flexGrow: 1,
+							display: "flex",
+							marginBottom: 0.5,
+						}}
+					>
+						<Typography>
+							{selectedDate && monthsOfYear[selectedDate.currentMonth]}{" "}
+							{selectedDate && selectedDate.currentYear}
+						</Typography>
+					</Grid>
+				</Grid>
+			</Grid>
 			<Grid item xs={12}>
 				<Grid container spacing={0}>
 					{daysOfWeek.map((weekDay, index) => (

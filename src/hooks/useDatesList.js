@@ -1,6 +1,20 @@
 import { useState, useEffect } from "react"
 
 const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+const monthsOfYear = [
+	"January",
+	"February",
+	"March",
+	"April",
+	"May",
+	"June",
+	"July",
+	"August",
+	"September",
+	"October",
+	"November",
+	"December",
+]
 
 const getDatesInReverse = (year, month, amountOfDays) => {
 	const lastDayOfMonth = new Date(year, month, 0).getDate()
@@ -63,9 +77,30 @@ const getCurrentDate = () => {
 
 const useDatesList = (specificDate = null) => {
 	const [datesList, setDatesList] = useState([])
+	const [selectedDate, setSelectedDate] = useState(null)
 
 	useEffect(() => {
-		const [currentDate, currentMonth, currentYear] = !specificDate ? getCurrentDate() : specificDate
+		const [currentDate, currentMonth, currentYear] = !specificDate
+			? getCurrentDate()
+			: specificDate
+
+		setSelectedDate({
+			currentDate,
+			currentMonth,
+			currentYear,
+		})
+
+		updateDatesList()
+	}, [])
+
+	useEffect(() => {
+		updateDatesList()
+	}, [selectedDate])
+
+	const updateDatesList = () => {
+		if (!selectedDate) return []
+
+		const { currentDate, currentMonth, currentYear } = selectedDate
 		let listOfDates = getMonthDates(currentDate, currentMonth, currentYear)
 
 		if (listOfDates[0].dayLabel !== daysOfWeek[0]) {
@@ -76,16 +111,18 @@ const useDatesList = (specificDate = null) => {
 		}
 
 		if (listOfDates[listOfDates.length - 1].dayLabel !== daysOfWeek[6]) {
-			const currentMonthIndex = daysOfWeek.indexOf(listOfDates[listOfDates.length - 1].dayLabel)
+			const currentMonthIndex = daysOfWeek.indexOf(
+				listOfDates[listOfDates.length - 1].dayLabel
+			)
 			const nextMonthDates = getNextMonthDates(currentMonthIndex)
 
 			nextMonthDates.forEach((day) => listOfDates.push(day))
 		}
 
 		setDatesList(listOfDates)
-	}, [specificDate])
+	}
 
-	return { datesList, daysOfWeek }
+	return { datesList, daysOfWeek, monthsOfYear, selectedDate, setSelectedDate }
 }
 
 export default useDatesList
