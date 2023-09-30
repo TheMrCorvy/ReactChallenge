@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect, useMemo } from "react"
+import { useState } from "react"
 
 import Drawer from "@mui/material/Drawer"
 import Grid from "@mui/material/Grid"
@@ -15,10 +15,23 @@ import SaveIcon from "@mui/icons-material/Save"
 import MiniCalendar from "../MiniCalendar"
 
 const DrawerMenu = ({ open, toggleDrawer }) => {
-	const [age, setAge] = useState("")
+	const [eventInfo, setEventInfo] = useState({
+		title: "",
+		time: "",
+		city: "",
+		description: "",
+	})
 
-	const handleChange = (event) => {
-		setAge(event.target.value)
+	const handleChange = (event, key) => {
+		setEventInfo({
+			...eventInfo,
+			[key]: event.target.value,
+		})
+	}
+
+	const handleSubmit = () => {
+		console.log(eventInfo)
+		toggleDrawer(false)
 	}
 
 	const timeOptions = (interval) =>
@@ -59,6 +72,8 @@ const DrawerMenu = ({ open, toggleDrawer }) => {
 						label="Event Title"
 						fullWidth
 						variant="filled"
+						value={eventInfo.title}
+						onChange={(e) => handleChange(e, "title")}
 					/>
 				</Grid>
 
@@ -71,9 +86,8 @@ const DrawerMenu = ({ open, toggleDrawer }) => {
 						<Select
 							labelId="time-select"
 							id="time-select-options"
-							value={age}
-							label="Age"
-							onChange={handleChange}
+							value={eventInfo.time}
+							onChange={(e) => handleChange(e, "time")}
 							size="small"
 						>
 							{timeOptions(30).map((option, optionIndex) => (
@@ -89,16 +103,33 @@ const DrawerMenu = ({ open, toggleDrawer }) => {
 				</Grid>
 				<Grid item xs={12}>
 					<TextField
+						id="event-city-input"
+						label="City for the event"
+						fullWidth
+						variant="filled"
+						value={eventInfo.city}
+						onChange={(e) => handleChange(e, "city")}
+					/>
+				</Grid>
+				<Grid item xs={12}>
+					<TextField
 						id="filled-multiline-flexible"
 						label="Event Description"
 						multiline
 						rows={4}
 						variant="filled"
 						fullWidth
+						value={eventInfo.description}
+						onChange={(e) => handleChange(e, "description")}
 					/>
 				</Grid>
 				<Grid item xs={12} sx={{ textAlign: "center" }}>
-					<Button variant="contained" disableElevation startIcon={<SaveIcon />}>
+					<Button
+						variant="contained"
+						disableElevation
+						startIcon={<SaveIcon />}
+						onClick={handleSubmit}
+					>
 						Save Event
 					</Button>
 				</Grid>
