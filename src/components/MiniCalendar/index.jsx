@@ -59,6 +59,15 @@ const MiniCalendar = () => {
 		})
 	}
 
+	const selectDate = (number) => {
+		const newDate = new Date(selectedDate.currentYear, selectedDate.currentMonth, number)
+
+		setSelectedDate({
+			...selectedDate,
+			currentDate: newDate,
+		})
+	}
+
 	const miniDay = (day) => (
 		<Typography
 			sx={{
@@ -79,6 +88,7 @@ const MiniCalendar = () => {
 					cursor: "pointer",
 				},
 			}}
+			onClick={() => selectDate(day.number)}
 		>
 			{day.number}
 		</Typography>
