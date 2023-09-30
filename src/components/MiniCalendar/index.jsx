@@ -46,6 +46,19 @@ const MiniCalendar = () => {
 		})
 	}
 
+	const moveToNextMonth = () => {
+		const newMonth = selectedDate.currentMonth + 1 > 11 ? 0 : selectedDate.currentMonth + 1
+		const newYear = newMonth === 0 ? selectedDate.currentYear + 1 : selectedDate.currentYear
+
+		const newDate = new Date(newYear, newMonth, 1)
+
+		setSelectedDate({
+			currentDate: newDate,
+			currentMonth: newMonth,
+			currentYear: newYear,
+		})
+	}
+
 	const miniDay = (day) => (
 		<Typography
 			sx={{
@@ -94,7 +107,7 @@ const MiniCalendar = () => {
 							</IconButton>
 						</Tooltip>{" "}
 						<Tooltip sx={{ mt: 2 }} title="Next Month">
-							<IconButton size="small">
+							<IconButton size="small" onClick={moveToNextMonth}>
 								<ChevronRightIcon />
 							</IconButton>
 						</Tooltip>
