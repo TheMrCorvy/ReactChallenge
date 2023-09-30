@@ -1,4 +1,10 @@
+import { useState, useContext, useEffect, useMemo } from "react"
+
 import Drawer from "@mui/material/Drawer"
+import Grid from "@mui/material/Grid"
+import Typography from "@mui/material/Typography"
+
+import MiniCalendar from "../MiniCalendar"
 
 const DrawerMenu = ({ open, toggleDrawer }) => {
 	return (
@@ -6,13 +12,27 @@ const DrawerMenu = ({ open, toggleDrawer }) => {
 			anchor="left"
 			open={open}
 			onClose={() => toggleDrawer(false)}
-			onOpen={() => toggleDrawer(true)}
+			sx={{
+				padding: "1.5rem",
+			}}
 		>
-			<p>
-				Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum nobis sapiente similique vel
-				voluptatem. Quas, nisi asperiores? Eos et, amet libero incidunt cum quo harum maiores non.
-				Quasi, tenetur dolor!
-			</p>
+			<Grid
+				container
+				spacing={2}
+				sx={{
+					padding: "1rem",
+				}}
+			>
+				<Grid item xs={12}>
+					<Typography variant="h4" gutterBottom>
+						Add a new event
+					</Typography>
+				</Grid>
+
+				<Grid item xs={12} sx={{ width: "0rem" }}>
+					<MiniCalendar />
+				</Grid>
+			</Grid>
 		</Drawer>
 	)
 }
