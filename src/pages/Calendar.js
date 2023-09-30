@@ -1,4 +1,5 @@
-import { useState } from "react"
+import { useDispatch } from "react-redux"
+import { openDrawer } from "../actions/drawerActions"
 
 import Button from "@mui/material/Button"
 
@@ -7,18 +8,14 @@ import Month from "../components/Layouts/Month"
 import Navbar from "../components/Navbar"
 
 function Calendar(props) {
-	const [open, setOpen] = useState(false)
-
-	const toggleDrawer = (drawerState) => {
-		setOpen(drawerState)
-	}
+	const dispatch = useDispatch()
 
 	return (
 		<>
-			<DrawerMenu open={open} toggleDrawer={toggleDrawer} />
+			<DrawerMenu />
 			<Navbar />
 			<Month />
-			<Button onClick={() => toggleDrawer(true)}>Add Event</Button>
+			<Button onClick={() => dispatch(openDrawer())}>Add Event</Button>
 		</>
 	)
 }

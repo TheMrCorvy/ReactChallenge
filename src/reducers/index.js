@@ -1,5 +1,8 @@
 import { combineReducers } from "redux"
+import drawerReducer from "./drawerReducer"
 
-const reducers = {}
+const reducers = {
+	open: drawerReducer,
+}
 
 export default combineReducers(reducers)

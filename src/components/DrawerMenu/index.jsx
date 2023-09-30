@@ -1,5 +1,8 @@
 import { useState } from "react"
 
+import { useSelector, useDispatch } from "react-redux"
+import { closeDrawer } from "../../actions/drawerActions"
+
 import Drawer from "@mui/material/Drawer"
 import Grid from "@mui/material/Grid"
 import Typography from "@mui/material/Typography"
@@ -14,12 +17,14 @@ import SaveIcon from "@mui/icons-material/Save"
 
 import MiniCalendar from "../MiniCalendar"
 
-const DrawerMenu = ({ open, toggleDrawer }) => {
+const DrawerMenu = () => {
+	const { open } = useSelector((state) => state.open)
+	const dispatch = useDispatch()
+
 	const [eventInfo, setEventInfo] = useState({
-		title: "",
-		time: "",
-		city: "",
-		description: "",
+		city: " ",
+		description: " ",
+		selectedDate: null,
 	})
 
 	const handleChange = (event, key) => {
@@ -30,8 +35,8 @@ const DrawerMenu = ({ open, toggleDrawer }) => {
 	}
 
 	const handleSubmit = () => {
-		console.log(eventInfo)
-		toggleDrawer(false)
+		console.log({ ...eventInfo })
+		dispatch(closeDrawer())
 	}
 
 	const timeOptions = (interval) =>
@@ -48,7 +53,7 @@ const DrawerMenu = ({ open, toggleDrawer }) => {
 		<Drawer
 			anchor="left"
 			open={open}
-			onClose={() => toggleDrawer(false)}
+			onClose={() => dispatch(closeDrawer())}
 			sx={{
 				padding: "1.5rem",
 			}}
@@ -67,17 +72,6 @@ const DrawerMenu = ({ open, toggleDrawer }) => {
 					</Typography>
 				</Grid>
 				<Grid item xs={12}>
-					<TextField
-						id="event-title-input"
-						label="Event Title"
-						fullWidth
-						variant="filled"
-						value={eventInfo.title}
-						onChange={(e) => handleChange(e, "title")}
-					/>
-				</Grid>
-
-				<Grid item xs={12}>
 					<MiniCalendar />
 				</Grid>
 				<Grid item xs={12}>
@@ -86,7 +80,7 @@ const DrawerMenu = ({ open, toggleDrawer }) => {
 						<Select
 							labelId="time-select"
 							id="time-select-options"
-							value={eventInfo.time}
+							value={eventInfo.time ? eventInfo.time : ""}
 							onChange={(e) => handleChange(e, "time")}
 							size="small"
 						>
@@ -109,18 +103,22 @@ const DrawerMenu = ({ open, toggleDrawer }) => {
 						variant="filled"
 						value={eventInfo.city}
 						onChange={(e) => handleChange(e, "city")}
+						error={eventInfo.city.length > 30 || eventInfo.city.length === 0}
+						helperText="Try to include between 1 to 30 characters"
 					/>
 				</Grid>
 				<Grid item xs={12}>
 					<TextField
-						id="filled-multiline-flexible"
+						id="event-description-input"
 						label="Event Description"
-						multiline
-						rows={4}
-						variant="filled"
 						fullWidth
+						variant="filled"
 						value={eventInfo.description}
 						onChange={(e) => handleChange(e, "description")}
+						error={
+							eventInfo.description.length > 30 || eventInfo.description.length === 0
+						}
+						helperText="Try to include between 1 to 30 characters"
 					/>
 				</Grid>
 				<Grid item xs={12} sx={{ textAlign: "center" }}>
