@@ -11,12 +11,16 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight"
 import { lightBlue } from "@mui/material/colors"
 import { useTheme } from "@mui/material/styles"
 
-import useDatesList from "../../hooks/useDatesList"
-
-const MiniCalendar = () => {
+const MiniCalendar = ({
+	moveToLastMonth,
+	moveToNextMonth,
+	selectDate,
+	monthsOfYear,
+	daysOfWeek,
+	datesList,
+	selectedDate,
+}) => {
 	const [weeks, setWeeks] = useState([])
-
-	const { datesList, daysOfWeek, monthsOfYear, selectedDate, setSelectedDate } = useDatesList()
 	const theme = useTheme()
 
 	useEffect(() => {
@@ -31,41 +35,6 @@ const MiniCalendar = () => {
 		}
 
 		setWeeks(weeksArr)
-	}
-
-	const moveToLastMonth = () => {
-		const newMonth = selectedDate.currentMonth - 1 < 0 ? 11 : selectedDate.currentMonth - 1
-		const newYear = newMonth === 11 ? selectedDate.currentYear - 1 : selectedDate.currentYear
-
-		const newDate = new Date(newYear, newMonth, 1)
-
-		setSelectedDate({
-			currentDate: newDate,
-			currentMonth: newMonth,
-			currentYear: newYear,
-		})
-	}
-
-	const moveToNextMonth = () => {
-		const newMonth = selectedDate.currentMonth + 1 > 11 ? 0 : selectedDate.currentMonth + 1
-		const newYear = newMonth === 0 ? selectedDate.currentYear + 1 : selectedDate.currentYear
-
-		const newDate = new Date(newYear, newMonth, 1)
-
-		setSelectedDate({
-			currentDate: newDate,
-			currentMonth: newMonth,
-			currentYear: newYear,
-		})
-	}
-
-	const selectDate = (number) => {
-		const newDate = new Date(selectedDate.currentYear, selectedDate.currentMonth, number)
-
-		setSelectedDate({
-			...selectedDate,
-			currentDate: newDate,
-		})
 	}
 
 	const miniDay = (day) => (

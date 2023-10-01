@@ -15,17 +15,55 @@ import Button from "@mui/material/Button"
 
 import SaveIcon from "@mui/icons-material/Save"
 
+import useDatesList from "../../hooks/useDatesList"
 import MiniCalendar from "../MiniCalendar"
 
 const DrawerMenu = () => {
 	const { open } = useSelector((state) => state.open)
 	const dispatch = useDispatch()
 
+	const { datesList, daysOfWeek, monthsOfYear, selectedDate, setSelectedDate } = useDatesList()
+
 	const [eventInfo, setEventInfo] = useState({
 		city: " ",
 		description: " ",
 		selectedDate: null,
 	})
+
+	const moveToLastMonth = () => {
+		const newMonth = selectedDate.currentMonth - 1 < 0 ? 11 : selectedDate.currentMonth - 1
+		const newYear = newMonth === 11 ? selectedDate.currentYear - 1 : selectedDate.currentYear
+
+		const newDate = new Date(newYear, newMonth, 1)
+
+		setSelectedDate({
+			currentDate: newDate,
+			currentMonth: newMonth,
+			currentYear: newYear,
+		})
+	}
+
+	const moveToNextMonth = () => {
+		const newMonth = selectedDate.currentMonth + 1 > 11 ? 0 : selectedDate.currentMonth + 1
+		const newYear = newMonth === 0 ? selectedDate.currentYear + 1 : selectedDate.currentYear
+
+		const newDate = new Date(newYear, newMonth, 1)
+
+		setSelectedDate({
+			currentDate: newDate,
+			currentMonth: newMonth,
+			currentYear: newYear,
+		})
+	}
+
+	const selectDate = (number) => {
+		const newDate = new Date(selectedDate.currentYear, selectedDate.currentMonth, number)
+
+		setSelectedDate({
+			...selectedDate,
+			currentDate: newDate,
+		})
+	}
 
 	const handleChange = (event, key) => {
 		setEventInfo({
@@ -72,7 +110,15 @@ const DrawerMenu = () => {
 					</Typography>
 				</Grid>
 				<Grid item xs={12}>
-					<MiniCalendar />
+					<MiniCalendar
+						selectDate={selectDate}
+						moveToLastMonth={moveToLastMonth}
+						moveToNextMonth={moveToNextMonth}
+						monthsOfYear={monthsOfYear}
+						daysOfWeek={daysOfWeek}
+						datesList={datesList}
+						selectedDate={selectedDate}
+					/>
 				</Grid>
 				<Grid item xs={12}>
 					<FormControl fullWidth variant="filled">
