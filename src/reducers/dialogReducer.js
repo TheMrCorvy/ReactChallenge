@@ -9,12 +9,12 @@ const dialogReducer = (state = initialState, action) => {
 		case OPEN_DIALOG:
 			return {
 				...state,
-				open: true,
+				dialogIsOpen: true,
 			}
 		case CLOSE_DIALOG:
 			return {
 				...state,
-				open: false,
+				dialogIsOpen: false,
 			}
 
 		default:
