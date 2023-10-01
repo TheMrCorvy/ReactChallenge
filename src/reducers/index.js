@@ -6,7 +6,7 @@ import dialogReducer from "./dialogReducer"
 const reducers = {
 	open: drawerReducer,
 	calendar: calendarReducer,
-	dialogIsOpen: dialogReducer,
+	dialog: dialogReducer,
 }
 
 export default combineReducers(reducers)

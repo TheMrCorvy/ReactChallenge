@@ -1,16 +1,16 @@
 export const CLOSE_DIALOG = "CLOSE_DIALOG"
 export const OPEN_DIALOG = "OPEN_DIALOG"
 
-export const openDialog = () => {
+export const openDialog = (eventDate) => {
 	return {
 		type: OPEN_DIALOG,
-		open: true,
+		payload: eventDate,
 	}
 }
 
 export const closeDialog = () => {
 	return {
 		type: CLOSE_DIALOG,
-		open: false,
+		payload: false,
 	}
 }

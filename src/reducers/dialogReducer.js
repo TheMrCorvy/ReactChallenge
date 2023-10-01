@@ -1,7 +1,8 @@
 import { OPEN_DIALOG, CLOSE_DIALOG } from "../actions/dialogActions"
 
 const initialState = {
-	open: false,
+	dialogIsOpen: false,
+	eventdate: null,
 }
 
 const dialogReducer = (state = initialState, action) => {
@@ -10,11 +11,13 @@ const dialogReducer = (state = initialState, action) => {
 			return {
 				...state,
 				dialogIsOpen: true,
+				eventDate: action.payload,
 			}
 		case CLOSE_DIALOG:
 			return {
 				...state,
 				dialogIsOpen: false,
+				eventdate: null,
 			}
 
 		default:
