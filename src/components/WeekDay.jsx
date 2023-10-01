@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react"
-import { useSelector } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
+import { openDialog } from "../actions/dialogActions"
 
 import Grid from "@mui/material/Grid"
 import Typography from "@mui/material/Typography"
+import ButtonBase from "@mui/material/ButtonBase"
 
 import { lightBlue, grey } from "@mui/material/colors"
 import { useTheme } from "@mui/material/styles"
@@ -18,6 +20,7 @@ const WeekDay = ({ day, dayIndex, className }) => {
 	const [bgColor, setBgColor] = useState(0)
 	const calendar = useSelector((state) => state.calendar)
 	const theme = useTheme()
+	const dispatch = useDispatch()
 
 	const colorOptions = [theme.palette.background.paper, lightBlue[700], grey[200]]
 
@@ -71,6 +74,12 @@ const WeekDay = ({ day, dayIndex, className }) => {
 		}
 	}, [dayIndex])
 
+	const dispatchOpenDielog = () => {
+		if (!todaysEvents) return
+
+		dispatch(openDialog())
+	}
+
 	return (
 		<Grid
 			item
@@ -81,26 +90,37 @@ const WeekDay = ({ day, dayIndex, className }) => {
 			}}
 			className={className}
 		>
-			<Typography
+			<ButtonBase
+				onClick={dispatchOpenDielog}
 				sx={{
-					background: colorOptions[bgColor],
-					lineHeight: "26px",
-					padding: theme.spacing(0.2),
-					borderStyle: "solid",
-					borderRadius: "50%",
-					color: day.isToday ? "white" : "inherit",
-					borderColor: isWeekend ? grey[200] : theme.palette.background.paper,
-					height: 35,
-					width: 35,
-					"&:hover": {
-						backgroundColor: day.isToday ? lightBlue[800] : theme.palette.grey[100],
-						cursor: "pointer",
-					},
+					flexGrow: 1,
+					flexDirection: "column",
+					borderRadius: !todaysEvents ? "50%" : "4px",
 				}}
 			>
-				{day.number}
-			</Typography>
-			{todaysEvents && <Event day={day} eventsArr={todaysEvents} />}
+				<Typography
+					sx={{
+						background: colorOptions[bgColor],
+						lineHeight: "26px",
+						padding: theme.spacing(0.2),
+						borderStyle: "solid",
+						borderRadius: "50%",
+						color: day.isToday ? "white" : "inherit",
+						borderColor: isWeekend ? grey[200] : theme.palette.background.paper,
+						height: 35,
+						width: 35,
+						marginBottom: !day.isToday ? 0.5 : 0,
+						"&:hover": {
+							backgroundColor: day.isToday ? lightBlue[800] : theme.palette.grey[100],
+							cursor: "pointer",
+						},
+					}}
+				>
+					{day.number}
+				</Typography>
+
+				{todaysEvents && <Event day={day} eventsArr={todaysEvents} />}
+			</ButtonBase>
 		</Grid>
 	)
 }
