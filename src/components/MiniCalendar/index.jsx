@@ -11,6 +11,8 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight"
 import { lightBlue } from "@mui/material/colors"
 import { useTheme } from "@mui/material/styles"
 
+import splitIntoWeeks from "../../helper/splitIntoWeeks"
+
 const MiniCalendar = ({
 	moveToLastMonth,
 	moveToNextMonth,
@@ -24,18 +26,8 @@ const MiniCalendar = ({
 	const theme = useTheme()
 
 	useEffect(() => {
-		splitIntoWeeks()
+		setWeeks(splitIntoWeeks(datesList))
 	}, [datesList])
-
-	const splitIntoWeeks = () => {
-		const weeksArr = []
-		for (let i = 0; i < datesList.length; i += 7) {
-			const week = datesList.slice(i, i + 7)
-			weeksArr.push(week)
-		}
-
-		setWeeks(weeksArr)
-	}
 
 	const miniDay = (day) => (
 		<Typography
