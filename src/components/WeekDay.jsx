@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { useSelector } from "react-redux"
 
 import Grid from "@mui/material/Grid"
 import Typography from "@mui/material/Typography"
@@ -15,9 +16,32 @@ const WeekDay = ({ day, dayIndex, className }) => {
 	const [isWeekend, setIsWeekend] = useState(false)
 	const [todaysEvents, setTodaysEvents] = useState(false)
 	const [bgColor, setBgColor] = useState(0)
+	const calendar = useSelector((state) => state.calendar)
 	const theme = useTheme()
 
 	const colorOptions = [theme.palette.background.paper, lightBlue[700], grey[200]]
+
+	useEffect(() => {
+		if (!calendar) return
+		if (!calendar.eventData) return
+
+		const eventDay = calendar.eventData.date.day
+		const eventMonth = calendar.eventData.date.month
+		const eventYear = calendar.eventData.date.year
+
+		// if not today, return
+		if (eventDay !== day.number || eventMonth !== day.month || eventYear !== day.year) {
+			return
+		}
+
+		if (!todaysEvents) {
+			setTodaysEvents([calendar.eventData])
+		} else {
+			let newEventsArr = [...todaysEvents]
+			newEventsArr.push(calendar.eventData)
+			setTodaysEvents(sortEventsByTime(newEventsArr))
+		}
+	}, [calendar])
 
 	useEffect(() => {
 		const weekend = dayIndex === 0 || dayIndex === 6

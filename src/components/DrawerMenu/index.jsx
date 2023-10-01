@@ -2,6 +2,7 @@ import { useState } from "react"
 
 import { useSelector, useDispatch } from "react-redux"
 import { closeDrawer } from "../../actions/drawerActions"
+import { updateCalendar } from "../../actions/calendarActions"
 
 import Drawer from "@mui/material/Drawer"
 import Grid from "@mui/material/Grid"
@@ -78,27 +79,23 @@ const DrawerMenu = ({ eventData }) => {
 		if (eventInfo.city.length <= 0 || eventInfo.description.length <= 0) return
 		if (eventInfo.city.length > 30 || eventInfo.description.length > 30) return
 
+		const newEvent = {
+			...eventInfo,
+			date: {
+				day: selectedDate.currentDate.getDate(),
+				month: selectedDate.currentMonth,
+				year: selectedDate.currentYear,
+			},
+		}
+
 		if (eventData) {
-			updateEvent({
-				...eventInfo,
-				date: {
-					day: selectedDate.currentDate.getDate(),
-					month: selectedDate.currentMonth,
-					year: selectedDate.currentYear,
-				},
-			})
+			updateEvent(newEvent)
 		} else {
-			createEvent({
-				...eventInfo,
-				date: {
-					day: selectedDate.currentDate.getDate(),
-					month: selectedDate.currentMonth,
-					year: selectedDate.currentYear,
-				},
-			})
+			createEvent(newEvent)
 		}
 
 		dispatch(closeDrawer())
+		dispatch(updateCalendar(newEvent))
 
 		const newDate = new Date()
 		setSelectedDate({
