@@ -32,8 +32,18 @@ const WeekDay = ({ day, dayIndex, className }) => {
 		const eventMonth = calendar.eventData.date.month
 		const eventYear = calendar.eventData.date.year
 
-		// if not today, return
 		if (eventDay !== day.number || eventMonth !== day.month || eventYear !== day.year) {
+			const eventsObj = getEventsByDay({
+				day: day.number,
+				month: day.month,
+				year: day.year,
+			})
+
+			if (eventsObj && Object.values(eventsObj)[0].date.month === day.month) {
+				setTodaysEvents(sortEventsByTime(Object.values(eventsObj)))
+			} else {
+				setTodaysEvents(false)
+			}
 			return
 		}
 

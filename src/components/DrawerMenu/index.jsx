@@ -104,7 +104,7 @@ const DrawerMenu = () => {
 		}
 
 		if (eventData) {
-			updateEvent(newEvent)
+			updateEvent(newEvent, eventData)
 		} else {
 			createEvent(newEvent)
 		}
