@@ -1,7 +1,8 @@
-import { OPEN_DRAWER, CLOSE_DRAWER } from "../actions/drawerActions"
+import { OPEN_DRAWER, CLOSE_DRAWER, OPEN_DRAWER_WITH_DATA } from "../actions/drawerActions"
 
 const initialState = {
 	open: false,
+	eventData: null,
 }
 
 const drawerReducer = (state = initialState, action) => {
@@ -15,6 +16,12 @@ const drawerReducer = (state = initialState, action) => {
 			return {
 				...state,
 				open: false,
+			}
+		case OPEN_DRAWER_WITH_DATA:
+			return {
+				...state,
+				open: true,
+				eventData: action.payload,
 			}
 
 		default:
