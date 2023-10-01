@@ -7,6 +7,7 @@ import { lightBlue, grey } from "@mui/material/colors"
 import { useTheme } from "@mui/material/styles"
 
 import { getEventsByDay } from "../services/eventServices"
+import sortEventsByTime from "../helper/sortEventsByTime"
 
 import Event from "./Event"
 
@@ -42,7 +43,7 @@ const WeekDay = ({ day, dayIndex, className }) => {
 		})
 
 		if (eventsObj && Object.values(eventsObj)[0].date.month === day.month) {
-			setTodaysEvents(Object.values(eventsObj))
+			setTodaysEvents(sortEventsByTime(Object.values(eventsObj)))
 		}
 	}, [dayIndex])
 
