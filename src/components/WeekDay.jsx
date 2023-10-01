@@ -77,7 +77,7 @@ const WeekDay = ({ day, dayIndex, className }) => {
 	const dispatchOpenDielog = () => {
 		if (!todaysEvents) return
 
-		dispatch(openDialog())
+		dispatch(openDialog(day))
 	}
 
 	return (
