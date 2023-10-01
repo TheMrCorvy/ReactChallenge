@@ -129,7 +129,11 @@ const MiniCalendar = ({
 				<Grid item xs={12} key={`small-calendar-line-week-${weekIndex}`}>
 					<Grid container spacing={0}>
 						{week.map((day, dayIndex) => (
-							<Grid item xs key={`small-calendar-line-day-${dayIndex}`}>
+							<Grid
+								item
+								xs
+								key={`small-calendar-line-week-${weekIndex}-day-${dayIndex}`}
+							>
 								{miniDay(day)}
 							</Grid>
 						))}

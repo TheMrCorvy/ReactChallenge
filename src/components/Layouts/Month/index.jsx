@@ -7,9 +7,10 @@ import Stack from "@mui/material/Stack"
 import styles from "./Month.module.css"
 
 import useDatesList from "../../../hooks/useDatesList"
+import { daysOfWeek } from "../../../helper/constants"
 
 function Month() {
-	const { datesList, daysOfWeek } = useDatesList()
+	const { datesList } = useDatesList()
 
 	return (
 		<Grid container spacing={0} className={styles.month_layout_column}>
@@ -29,11 +30,21 @@ function Month() {
 			</Grid>
 			{datesList &&
 				datesList.map((date, i) => (
-					<Grid item xs className={styles.month_layout_cell} key={"monthly_layout_cell_" + i}>
+					<Grid
+						item
+						xs
+						className={styles.month_layout_cell}
+						key={"monthly_layout_cell_" + i}
+					>
 						<div>
 							{date.isToday ? (
 								<>
-									<Button color="primary" variant="contained" size="small" sx={{ marginBottom: 0 }}>
+									<Button
+										color="primary"
+										variant="contained"
+										size="small"
+										sx={{ marginBottom: 0 }}
+									>
 										{date.number}
 									</Button>
 								</>
@@ -49,7 +60,8 @@ function Month() {
 							>
 								<AlertTitle>Error</AlertTitle>
 								<span style={{ padding: 0 }}>
-									texto de prueba para ver realmente que tan largo alcanza a ser el alert
+									texto de prueba para ver realmente que tan largo alcanza a ser
+									el alert
 								</span>
 							</Alert>
 							<Alert
@@ -60,18 +72,27 @@ function Month() {
 							>
 								<AlertTitle>Error</AlertTitle>
 								<span style={{ padding: 0 }}>
-									texto de prueba para ver realmente que tan largo alcanza a ser el alert
+									texto de prueba para ver realmente que tan largo alcanza a ser
+									el alert
 								</span>
 							</Alert>
 							<Alert
-								sx={{ display: { xs: "block", sm: "block", md: "none" }, px: 0.4, py: 0 }}
+								sx={{
+									display: { xs: "block", sm: "block", md: "none" },
+									px: 0.4,
+									py: 0,
+								}}
 								severity="info"
 								variant="filled"
 							>
 								{" "}
 							</Alert>
 							<Alert
-								sx={{ display: { xs: "block", sm: "block", md: "none" }, px: 0.4, py: 0 }}
+								sx={{
+									display: { xs: "block", sm: "block", md: "none" },
+									px: 0.4,
+									py: 0,
+								}}
 								severity="info"
 								variant="filled"
 							>
