@@ -32,9 +32,7 @@ export const createEvent = (eventData) => {
 	}
 
 	const date = `${eventData.date.year}_${eventData.date.month}_${eventData.date.day}`
-
 	localDB[date] = { ...localDB[date], [eventData.time]: eventData }
-
 	localStorage.setItem("eventDB", JSON.stringify(localDB))
 
 	return true
@@ -60,9 +58,7 @@ export const updateEvent = (eventData) => {
 	}
 
 	const date = `${eventData.date.year}_${eventData.date.month}_${eventData.date.day}`
-
 	eventDB[date] = { ...eventDB[date], [eventData.time]: eventData }
-
 	localStorage.setItem("eventDB", JSON.stringify(eventDB))
 
 	return true
@@ -76,7 +72,6 @@ export const deleteEvent = (eventData) => {
 	}
 
 	const date = `${eventData.date.year}_${eventData.date.month}_${eventData.date.day}`
-
 	const clone = {}
 
 	for (const key in eventDB[date]) {
@@ -86,7 +81,6 @@ export const deleteEvent = (eventData) => {
 	}
 
 	eventDB[date] = clone
-
 	localStorage.setItem("eventDB", JSON.stringify(eventDB))
 
 	return true

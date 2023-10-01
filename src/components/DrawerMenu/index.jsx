@@ -18,16 +18,19 @@ import SaveIcon from "@mui/icons-material/Save"
 import useDatesList from "../../hooks/useDatesList"
 import MiniCalendar from "../MiniCalendar"
 
-const DrawerMenu = () => {
+import { createEvent, updateEvent } from "../../services/eventServices"
+
+const DrawerMenu = ({ eventData }) => {
 	const { open } = useSelector((state) => state.open)
 	const dispatch = useDispatch()
 
-	const { datesList, daysOfWeek, monthsOfYear, selectedDate, setSelectedDate } = useDatesList()
+	const { datesList, daysOfWeek, monthsOfYear, selectedDate, setSelectedDate } = useDatesList(
+		eventData && eventData.date
+	)
 
 	const [eventInfo, setEventInfo] = useState({
-		city: " ",
-		description: " ",
-		selectedDate: null,
+		city: eventData ? eventData.city : " ",
+		description: eventData ? eventData.description : " ",
 	})
 
 	const moveToLastMonth = () => {
@@ -73,8 +76,39 @@ const DrawerMenu = () => {
 	}
 
 	const handleSubmit = () => {
-		console.log({ ...eventInfo })
+		if (eventData) {
+			updateEvent({
+				...eventInfo,
+				date: {
+					day: selectedDate.currentDate.getDate(),
+					month: selectedDate.currentMonth,
+					year: selectedDate.currentYear,
+				},
+			})
+		} else {
+			createEvent({
+				...eventInfo,
+				date: {
+					day: selectedDate.currentDate.getDate(),
+					month: selectedDate.currentMonth,
+					year: selectedDate.currentYear,
+				},
+			})
+		}
+
 		dispatch(closeDrawer())
+
+		const newDate = new Date()
+		setSelectedDate({
+			currentDate: newDate,
+			currentMonth: newDate.getMonth(),
+			currentYear: newDate.getFullYear(),
+		})
+
+		setEventInfo({
+			city: " ",
+			description: " ",
+		})
 	}
 
 	const timeOptions = (interval) =>
