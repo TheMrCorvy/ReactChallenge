@@ -96,6 +96,9 @@ const WeekDay = ({ day, dayIndex, className }) => {
 					flexGrow: 1,
 					flexDirection: "column",
 					borderRadius: !todaysEvents ? "50%" : "4px",
+					width: !todaysEvents ? "auto" : "100%",
+					minHeight: !todaysEvents ? "auto" : "100%",
+					justifyContent: "start",
 				}}
 			>
 				<Typography

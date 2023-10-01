@@ -6,7 +6,6 @@ const Event = ({ day, eventsArr }) => {
 	return (
 		<Stack
 			sx={{
-				width: "100%",
 				mt: day.isToday ? "5px" : null,
 			}}
 			spacing={1}
