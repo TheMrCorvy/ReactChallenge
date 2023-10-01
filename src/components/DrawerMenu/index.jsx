@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 import { useSelector, useDispatch } from "react-redux"
 import { closeDrawer } from "../../actions/drawerActions"
@@ -22,16 +22,31 @@ import MiniCalendar from "../MiniCalendar"
 import { createEvent, updateEvent } from "../../services/eventServices"
 import timeOptions from "../../helper/timeOptions"
 
-const DrawerMenu = ({ eventData }) => {
-	const { open } = useSelector((state) => state.open)
+const DrawerMenu = () => {
+	const { open, eventData } = useSelector((state) => state.open)
 	const dispatch = useDispatch()
 
-	const { datesList, selectedDate, setSelectedDate } = useDatesList(eventData && eventData.date)
+	const { datesList, selectedDate, setSelectedDate } = useDatesList()
 
 	const [eventInfo, setEventInfo] = useState({
-		city: eventData ? eventData.city : " ",
-		description: eventData ? eventData.description : " ",
+		city: " ",
+		description: " ",
 	})
+
+	useEffect(() => {
+		if (!eventData) return
+		const newDate = new Date(eventData.date.year, eventData.date.month, eventData.date.day)
+		setSelectedDate({
+			currentDate: newDate,
+			currentMonth: eventData.date.month,
+			currentYear: eventData.date.year,
+		})
+		setEventInfo({
+			city: eventData.city,
+			description: eventData.description,
+			time: eventData.time,
+		})
+	}, [eventData])
 
 	const moveToLastMonth = () => {
 		const newMonth = selectedDate.currentMonth - 1 < 0 ? 11 : selectedDate.currentMonth - 1

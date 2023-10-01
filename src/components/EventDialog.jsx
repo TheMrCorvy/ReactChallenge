@@ -2,6 +2,7 @@ import { useEffect, forwardRef, useState } from "react"
 
 import { useSelector, useDispatch } from "react-redux"
 import { closeDialog } from "../actions/dialogActions"
+import { openDrawerWithData } from "../actions/drawerActions"
 
 import Button from "@mui/material/Button"
 import Dialog from "@mui/material/Dialog"
@@ -46,6 +47,11 @@ const EventDialog = () => {
 		}
 	}, [dialogIsOpen, eventDate])
 
+	const dispatchEditEvent = (eventData) => {
+		dispatch(closeDialog())
+		dispatch(openDrawerWithData(eventData))
+	}
+
 	return (
 		<Dialog
 			open={dialogIsOpen ? true : false}
@@ -84,7 +90,12 @@ const EventDialog = () => {
 								key={`list-tem-events-dialog-${eventIndex}-date-${event.date.day}`}
 								secondaryAction={
 									<>
-										<IconButton edge="end" aria-label="edit" sx={{ mr: 3 }}>
+										<IconButton
+											edge="end"
+											aria-label="edit"
+											sx={{ mr: 3 }}
+											onClick={() => dispatchEditEvent(event)}
+										>
 											<EditIcon />
 										</IconButton>
 										<IconButton edge="end" aria-label="delete" sx={{ mr: 3 }}>
