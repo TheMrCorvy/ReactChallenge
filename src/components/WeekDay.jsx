@@ -59,7 +59,6 @@ const WeekDay = ({ day, dayIndex, className }) => {
 		let newEventsArr = [...todaysEvents]
 		newEventsArr.push(calendar.eventData)
 		setTodaysEvents(sortEventsByTime(newEventsArr))
-		console.log("mundo")
 	}, [calendar])
 
 	useEffect(() => {
