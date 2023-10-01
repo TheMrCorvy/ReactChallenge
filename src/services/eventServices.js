@@ -23,6 +23,8 @@ const example_local_db = {
 	},
 }
 
+const formatDate = (day, month, year) => `${day}_${month}_${year}`
+
 export const createEvent = (eventData) => {
 	let localDB = {}
 	const eventDB = JSON.parse(localStorage.getItem("eventDB"))
@@ -31,7 +33,7 @@ export const createEvent = (eventData) => {
 		localDB = { ...eventDB }
 	}
 
-	const date = `${eventData.date.year}_${eventData.date.month}_${eventData.date.day}`
+	const date = formatDate(eventData.date.day, eventData.date.month, eventData.date.year)
 	localDB[date] = { ...localDB[date], [eventData.time]: eventData }
 	localStorage.setItem("eventDB", JSON.stringify(localDB))
 
@@ -45,9 +47,21 @@ export const getEvent = ({ day, month, year, time }) => {
 		return false
 	}
 
-	const date = `${year}_${month}_${day}`
+	const date = formatDate(day, month, year)
 
 	return eventDB[date][time]
+}
+
+export const getEventsByDay = ({ day, month, year }) => {
+	const eventDB = JSON.parse(localStorage.getItem("eventDB"))
+
+	if (!eventDB) {
+		return false
+	}
+
+	const date = formatDate(day, month, year)
+
+	return eventDB[date]
 }
 
 export const updateEvent = (eventData) => {
@@ -57,7 +71,7 @@ export const updateEvent = (eventData) => {
 		return false
 	}
 
-	const date = `${eventData.date.year}_${eventData.date.month}_${eventData.date.day}`
+	const date = formatDate(eventData.date.day, eventData.date.month, eventData.date.year)
 	eventDB[date] = { ...eventDB[date], [eventData.time]: eventData }
 	localStorage.setItem("eventDB", JSON.stringify(eventDB))
 
@@ -71,7 +85,7 @@ export const deleteEvent = (eventData) => {
 		return false
 	}
 
-	const date = `${eventData.date.year}_${eventData.date.month}_${eventData.date.day}`
+	const date = formatDate(eventData.date.day, eventData.date.month, eventData.date.year)
 	const clone = {}
 
 	for (const key in eventDB[date]) {
