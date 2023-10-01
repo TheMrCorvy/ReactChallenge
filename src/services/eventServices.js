@@ -66,37 +66,51 @@ export const getEventsByDay = ({ day, month, year }) => {
 	return eventDB[date]
 }
 
-export const updateEvent = (eventData) => {
-	const eventDB = JSON.parse(localStorage.getItem("eventDB"))
+export const updateEvent = (newEventData, oldEventData) => {
+	let eventDB = JSON.parse(localStorage.getItem("eventDB"))
 
 	if (!eventDB) {
 		return false
 	}
 
-	const date = formatDate(eventData.date.day, eventData.date.month, eventData.date.year)
-	eventDB[date] = { ...eventDB[date], [eventData.time]: eventData }
+	const dateOld = formatDate(
+		oldEventData.date.day,
+		oldEventData.date.month,
+		oldEventData.date.year
+	)
+	const dateNew = formatDate(
+		newEventData.date.day,
+		newEventData.date.month,
+		newEventData.date.year
+	)
+
+	delete eventDB[dateOld][oldEventData.time]
+
+	if (Object.keys(eventDB[dateOld]).length === 0) {
+		delete eventDB[dateOld]
+	}
+
+	eventDB[dateNew] = { ...eventDB[dateNew], [newEventData.time]: newEventData }
 	localStorage.setItem("eventDB", JSON.stringify(eventDB))
 
 	return true
 }
 
 export const deleteEvent = (eventData) => {
-	const eventDB = JSON.parse(localStorage.getItem("eventDB"))
+	let eventDB = JSON.parse(localStorage.getItem("eventDB"))
 
 	if (!eventDB) {
 		return false
 	}
 
 	const date = formatDate(eventData.date.day, eventData.date.month, eventData.date.year)
-	const clone = {}
 
-	for (const key in eventDB[date]) {
-		if (key !== eventData.time) {
-			clone[key] = eventDB[date][key]
-		}
+	delete eventDB[date][eventData.time]
+
+	if (Object.keys(eventDB[date]).length === 0) {
+		delete eventDB[date]
 	}
 
-	eventDB[date] = clone
 	localStorage.setItem("eventDB", JSON.stringify(eventDB))
 
 	return true
