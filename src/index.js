@@ -2,6 +2,8 @@ import React from "react"
 import ReactDOM from "react-dom"
 import { Provider as ReduxProvider } from "react-redux"
 
+import CssBaseline from "@mui/material/CssBaseline"
+
 import Main from "./Main"
 import reducers from "./reducers"
 import reportWebVitals from "./reportWebVitals"
@@ -17,6 +19,7 @@ import "./sass/app.scss"
 
 ReactDOM.render(
 	<React.StrictMode>
+		<CssBaseline />
 		<ReduxProvider store={getStore(reducers)}>
 			<Main />
 		</ReduxProvider>
