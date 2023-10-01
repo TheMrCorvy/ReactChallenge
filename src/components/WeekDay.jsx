@@ -2,14 +2,13 @@ import { useEffect, useState } from "react"
 
 import Grid from "@mui/material/Grid"
 import Typography from "@mui/material/Typography"
-import AlertTitle from "@mui/material/AlertTitle"
-import Stack from "@mui/material/Stack"
-import Alert from "@mui/material/Alert"
 
 import { lightBlue, grey } from "@mui/material/colors"
 import { useTheme } from "@mui/material/styles"
 
 import { getEventsByDay } from "../services/eventServices"
+
+import Event from "./Event"
 
 const WeekDay = ({ day, dayIndex, className }) => {
 	const [isWeekend, setIsWeekend] = useState(false)
@@ -36,14 +35,14 @@ const WeekDay = ({ day, dayIndex, className }) => {
 		setIsWeekend(weekend)
 		setBgColor(newBgColor)
 
-		const eventsArr = getEventsByDay({
+		const eventsObj = getEventsByDay({
 			day: day.number,
 			month: day.month,
 			year: day.year,
 		})
 
-		if (eventsArr && Object.values(eventsArr)[0].date.month === day.month) {
-			setTodaysEvents(eventsArr)
+		if (eventsObj && Object.values(eventsObj)[0].date.month === day.month) {
+			setTodaysEvents(Object.values(eventsObj))
 		}
 	}, [dayIndex])
 
@@ -76,46 +75,7 @@ const WeekDay = ({ day, dayIndex, className }) => {
 			>
 				{day.number}
 			</Typography>
-			{todaysEvents && (
-				<Stack
-					sx={{
-						width: "100%",
-						mt: day.isToday ? "5px" : null,
-					}}
-					spacing={1}
-				>
-					<Alert
-						icon={false}
-						sx={{
-							display: { xs: "none", sm: "none", md: "block" },
-						}}
-						severity="warning"
-					>
-						<AlertTitle>Error</AlertTitle>
-						<span style={{ padding: 0 }}>texto de prueba para ver oaoso</span>
-					</Alert>
-					<Alert
-						icon={false}
-						sx={{
-							display: { xs: "none", sm: "none", md: "block" },
-						}}
-						severity="error"
-					>
-						<AlertTitle>Error</AlertTitle>
-						<span style={{ padding: 0 }}>texto de prueba para ver oaoso</span>
-					</Alert>
-					<Alert
-						sx={{
-							display: { xs: "block", sm: "block", md: "none" },
-							px: 0.4,
-						}}
-						severity="info"
-						variant="filled"
-					>
-						{" "}
-					</Alert>
-				</Stack>
-			)}
+			{todaysEvents && <Event day={day} eventsArr={todaysEvents} />}
 		</Grid>
 	)
 }
