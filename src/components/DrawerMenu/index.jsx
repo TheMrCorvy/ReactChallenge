@@ -34,7 +34,11 @@ const DrawerMenu = () => {
 	})
 
 	useEffect(() => {
-		if (!eventData) return
+		if (!eventData) {
+			clearForm()
+
+			return
+		}
 		const newDate = new Date(eventData.date.year, eventData.date.month, eventData.date.day)
 		setSelectedDate({
 			currentDate: newDate,
@@ -112,6 +116,10 @@ const DrawerMenu = () => {
 		dispatch(closeDrawer())
 		dispatch(updateCalendar(newEvent))
 
+		clearForm()
+	}
+
+	const clearForm = () => {
 		const newDate = new Date()
 		setSelectedDate({
 			currentDate: newDate,

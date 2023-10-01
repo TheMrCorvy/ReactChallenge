@@ -49,11 +49,17 @@ const WeekDay = ({ day, dayIndex, className }) => {
 
 		if (!todaysEvents) {
 			setTodaysEvents([calendar.eventData])
-		} else {
-			let newEventsArr = [...todaysEvents]
-			newEventsArr.push(calendar.eventData)
-			setTodaysEvents(sortEventsByTime(newEventsArr))
+			return
 		}
+
+		if (todaysEvents && todaysEvents.find((event) => event.time === calendar.eventData.time)) {
+			return
+		}
+
+		let newEventsArr = [...todaysEvents]
+		newEventsArr.push(calendar.eventData)
+		setTodaysEvents(sortEventsByTime(newEventsArr))
+		console.log("mundo")
 	}, [calendar])
 
 	useEffect(() => {
