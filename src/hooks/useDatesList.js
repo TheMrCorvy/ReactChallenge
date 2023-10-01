@@ -13,6 +13,8 @@ const getDatesInReverse = (year, month, amountOfDays) => {
 		datesInReverse.push({
 			number: day,
 			dayLabel: dayOfWeek,
+			month: month - 1 < 0 ? 11 : month - 1,
+			year: month - 1 < 0 ? year - 1 : year,
 		})
 	}
 
@@ -31,13 +33,15 @@ const getMonthDates = (currentDay, month, year) => {
 			number: day,
 			dayLabel: daysOfWeek[date.getDay()],
 			isToday: date.getDate() === currentDay.getDate(),
+			month,
+			year,
 		})
 	}
 
 	return listOfDates
 }
 
-const getNextMonthDates = (currentMonthIndex) => {
+const getNextMonthDates = (currentMonthIndex, year) => {
 	let newDay = 1
 	let listOfDates = []
 
@@ -45,6 +49,8 @@ const getNextMonthDates = (currentMonthIndex) => {
 		listOfDates.push({
 			number: newDay,
 			dayLabel: daysOfWeek[day],
+			month: currentMonthIndex + 1,
+			year,
 		})
 
 		newDay++
@@ -100,7 +106,7 @@ const useDatesList = (specificDate = null) => {
 			const currentMonthIndex = daysOfWeek.indexOf(
 				listOfDates[listOfDates.length - 1].dayLabel
 			)
-			const nextMonthDates = getNextMonthDates(currentMonthIndex)
+			const nextMonthDates = getNextMonthDates(currentMonthIndex, currentYear)
 
 			nextMonthDates.forEach((day) => listOfDates.push(day))
 		}
