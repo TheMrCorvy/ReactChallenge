@@ -8,12 +8,15 @@ import AlertTitle from "@mui/material/AlertTitle"
 import Stack from "@mui/material/Stack"
 import Alert from "@mui/material/Alert"
 
-import { lightBlue } from "@mui/material/colors"
+import { lightBlue, grey } from "@mui/material/colors"
 import { useTheme } from "@mui/material/styles"
+
+import styles from "./CalendarComponent.module.css"
 
 import { daysOfWeek } from "../../helper/constants"
 import useDatesList from "../../hooks/useDatesList"
 import splitIntoWeeks from "../../helper/splitIntoWeeks"
+import WeekDay from "../WeekDay"
 
 const CalendarComponent = () => {
 	const theme = useTheme()
@@ -23,41 +26,32 @@ const CalendarComponent = () => {
 
 	useEffect(() => {
 		setWeeks(splitIntoWeeks(datesList))
-	}, [])
+	}, [datesList])
 
 	return (
 		<Container
 			maxWidth="xl"
+			className={styles.calendar_container}
 			sx={{
-				height: "90vh",
-				marginTop: "1rem",
+				color: theme.palette.text.secondary,
 			}}
 		>
 			<Grid container spacing={0}>
 				<Grid item xs={12}>
-					<Grid
-						container
-						spacing={0}
-						sx={{
-							borderTop: "1px solid #dadce0",
-							borderLeft: "1px solid #dadce0",
-						}}
-					>
+					<Grid container spacing={0} className={styles.calendar_grid}>
 						{daysOfWeek.map((weekDay, index) => (
 							<Grid item xs key={`big-calendar-column-header-${index}`}>
-								<Box
-									sx={{
-										borderBottom: "1px solid #dadce0",
-										borderRight: "1px solid #dadce0",
-										padding: theme.spacing(1),
-										textAlign: "center",
-										color: theme.palette.text.secondary,
-										backgroundColor: theme.palette.background.paper,
-										borderRadius: 0,
-										minWidth: 64.38,
-									}}
-								>
-									<Typography>{weekDay}</Typography>
+								<Box className={styles.calendar_header_cell}>
+									<Typography
+										sx={{ display: { xs: "none", sm: "none", md: "block" } }}
+									>
+										{weekDay}
+									</Typography>
+									<Typography
+										sx={{ display: { xs: "block", sm: "block", md: "none" } }}
+									>
+										{weekDay.substr(0, 1)}
+									</Typography>
 								</Box>
 							</Grid>
 						))}
@@ -67,58 +61,12 @@ const CalendarComponent = () => {
 					<Grid item xs={12} key={`big-calendar-line-week-${weekIndex}`}>
 						<Grid container spacing={0}>
 							{week.map((day, dayIndex) => (
-								<Grid
-									item
-									xs
-									key={`big-calendar-line-week-${weekIndex}-day-${dayIndex}`}
-									sx={{
-										borderBottom: "1px solid #dadce0",
-										borderRight: "1px solid #dadce0",
-										borderLeft: dayIndex === 0 ? "1px solid #dadce0" : "none",
-										padding: theme.spacing(1),
-										textAlign: "center",
-										color: theme.palette.text.secondary,
-										backgroundColor: theme.palette.background.paper,
-										height: "16.5vh",
-										overflowY: "scroll",
-									}}
-								>
-									{day.number}
-									<Stack
-										sx={{
-											width: "100%",
-											mt: day.isToday ? "5px" : null,
-										}}
-										spacing={1}
-									>
-										<Alert
-											icon={false}
-											sx={{
-												display: { xs: "none", sm: "none", md: "block" },
-											}}
-											severity="error"
-										>
-											<AlertTitle>Error</AlertTitle>
-											<span style={{ padding: 0 }}>
-												texto de prueba para ver realmente que tan largo
-												alcanza a ser el alert
-											</span>
-										</Alert>
-										<Alert
-											icon={false}
-											sx={{
-												display: { xs: "none", sm: "none", md: "block" },
-											}}
-											severity="error"
-										>
-											<AlertTitle>Error</AlertTitle>
-											<span style={{ padding: 0 }}>
-												texto de prueba para ver realmente que tan largo
-												alcanza a ser el alert
-											</span>
-										</Alert>
-									</Stack>
-								</Grid>
+								<WeekDay
+									day={day}
+									dayIndex={dayIndex}
+									weekIndex={weekIndex}
+									className={styles.calendar_weekday_cell}
+								/>
 							))}
 						</Grid>
 					</Grid>

@@ -1,0 +1,50 @@
+.calendar_container{
+    height: 90vh;
+    margin-top: 1rem;
+}
+
+.calendar_grid{
+    border-top: 1px solid #dadce0;
+    border-left: 1px solid #dadce0;
+}
+
+.calendar_header_cell{
+    border-bottom: 1px solid #dadce0;
+    border-right: 1px solid #dadce0;
+    padding: 8px;
+    text-align: center;
+}
+
+.calendar_weekday_cell{
+    border-bottom: 1px solid #dadce0;
+    border-right: 1px solid #dadce0;
+    padding: 8px;
+    text-align: center;
+    height: 16.5vh;
+    overflow-y: scroll;
+
+}
+
+.calendar_weekday_cell::-webkit-scrollbar {
+	display: none;
+}
+.calendar_weekend_cell::-webkit-scrollbar {
+	display: none;
+}
+
+.calendar_typography{
+    line-height: 26px;
+    padding: 1.6px;
+    border-radius: 50%;
+    height: 35px;
+    width: 35px;
+}
+
+@media (max-width: 900px) {
+	.calendar_weekday_cell {
+		overflow-y: hidden;
+	}
+	.calendar_weekend_cell {
+		overflow-y: hidden;
+	}
+}
