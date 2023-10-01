@@ -24,9 +24,7 @@ const DrawerMenu = ({ eventData }) => {
 	const { open } = useSelector((state) => state.open)
 	const dispatch = useDispatch()
 
-	const { datesList, daysOfWeek, monthsOfYear, selectedDate, setSelectedDate } = useDatesList(
-		eventData && eventData.date
-	)
+	const { datesList, selectedDate, setSelectedDate } = useDatesList(eventData && eventData.date)
 
 	const [eventInfo, setEventInfo] = useState({
 		city: eventData ? eventData.city : " ",
@@ -148,8 +146,6 @@ const DrawerMenu = ({ eventData }) => {
 						selectDate={selectDate}
 						moveToLastMonth={moveToLastMonth}
 						moveToNextMonth={moveToNextMonth}
-						monthsOfYear={monthsOfYear}
-						daysOfWeek={daysOfWeek}
 						datesList={datesList}
 						selectedDate={selectedDate}
 					/>

@@ -13,12 +13,12 @@ import { useTheme } from "@mui/material/styles"
 
 import splitIntoWeeks from "../../helper/splitIntoWeeks"
 
+import { monthsOfYear, daysOfWeek } from "../../helper/constants"
+
 const MiniCalendar = ({
 	moveToLastMonth,
 	moveToNextMonth,
 	selectDate,
-	monthsOfYear,
-	daysOfWeek,
 	datesList,
 	selectedDate,
 }) => {

@@ -108,7 +108,7 @@ const useDatesList = (specificDate = null) => {
 		setDatesList(listOfDates)
 	}
 
-	return { datesList, daysOfWeek, monthsOfYear, selectedDate, setSelectedDate }
+	return { datesList, selectedDate, setSelectedDate }
 }
 
 export default useDatesList
