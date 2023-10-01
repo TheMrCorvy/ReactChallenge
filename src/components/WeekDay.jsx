@@ -9,19 +9,21 @@ import Alert from "@mui/material/Alert"
 import { lightBlue, grey } from "@mui/material/colors"
 import { useTheme } from "@mui/material/styles"
 
-const WeekDay = ({ day, dayIndex, weekIndex, className }) => {
+import { getEventsByDay } from "../services/eventServices"
+
+const WeekDay = ({ day, dayIndex, className }) => {
 	const [isWeekend, setIsWeekend] = useState(false)
+	const [todaysEvents, setTodaysEvents] = useState(false)
 	const [bgColor, setBgColor] = useState(0)
 	const theme = useTheme()
 
 	const colorOptions = [theme.palette.background.paper, lightBlue[700], grey[200]]
-	const hoverColorOptions = [theme.palette.background.paper, lightBlue[800], grey[100]]
 
 	useEffect(() => {
-		setIsWeekend(dayIndex === 0 || dayIndex === 6)
+		const weekend = dayIndex === 0 || dayIndex === 6
 		let newBgColor
 
-		if (isWeekend) {
+		if (weekend) {
 			newBgColor = 2
 		} else {
 			newBgColor = 0
@@ -31,14 +33,24 @@ const WeekDay = ({ day, dayIndex, weekIndex, className }) => {
 			newBgColor = 1
 		}
 
+		setIsWeekend(weekend)
 		setBgColor(newBgColor)
+
+		const eventsArr = getEventsByDay({
+			day: day.number,
+			month: day.month,
+			year: day.year,
+		})
+
+		if (eventsArr && eventsArr[0].date.month === day.month) {
+			setTodaysEvents(eventsArr)
+		}
 	}, [dayIndex])
 
 	return (
 		<Grid
 			item
 			xs
-			key={`big-calendar-line-week-${weekIndex}-day-${dayIndex}`}
 			sx={{
 				borderLeft: dayIndex === 0 ? "1px solid #dadce0" : "none",
 				bgcolor: isWeekend ? grey[200] : theme.palette.background.paper,
@@ -64,48 +76,46 @@ const WeekDay = ({ day, dayIndex, weekIndex, className }) => {
 			>
 				{day.number}
 			</Typography>
-			<Stack
-				sx={{
-					width: "100%",
-					mt: day.isToday ? "5px" : null,
-				}}
-				spacing={1}
-			>
-				<Alert
-					icon={false}
+			{todaysEvents && (
+				<Stack
 					sx={{
-						display: { xs: "none", sm: "none", md: "block" },
+						width: "100%",
+						mt: day.isToday ? "5px" : null,
 					}}
-					severity="warning"
+					spacing={1}
 				>
-					<AlertTitle>Error</AlertTitle>
-					<span style={{ padding: 0 }}>
-						texto de prueba para ver realmente que tan largo alcanza a ser el alert
-					</span>
-				</Alert>
-				<Alert
-					icon={false}
-					sx={{
-						display: { xs: "none", sm: "none", md: "block" },
-					}}
-					severity="error"
-				>
-					<AlertTitle>Error</AlertTitle>
-					<span style={{ padding: 0 }}>
-						texto de prueba para ver realmente que tan largo alcanza a ser el alert
-					</span>
-				</Alert>
-				<Alert
-					sx={{
-						display: { xs: "block", sm: "block", md: "none" },
-						px: 0.4,
-					}}
-					severity="info"
-					variant="filled"
-				>
-					{" "}
-				</Alert>
-			</Stack>
+					<Alert
+						icon={false}
+						sx={{
+							display: { xs: "none", sm: "none", md: "block" },
+						}}
+						severity="warning"
+					>
+						<AlertTitle>Error</AlertTitle>
+						<span style={{ padding: 0 }}>texto de prueba para ver oaoso</span>
+					</Alert>
+					<Alert
+						icon={false}
+						sx={{
+							display: { xs: "none", sm: "none", md: "block" },
+						}}
+						severity="error"
+					>
+						<AlertTitle>Error</AlertTitle>
+						<span style={{ padding: 0 }}>texto de prueba para ver oaoso</span>
+					</Alert>
+					<Alert
+						sx={{
+							display: { xs: "block", sm: "block", md: "none" },
+							px: 0.4,
+						}}
+						severity="info"
+						variant="filled"
+					>
+						{" "}
+					</Alert>
+				</Stack>
+			)}
 		</Grid>
 	)
 }

@@ -4,11 +4,6 @@ import Container from "@mui/material/Container"
 import Grid from "@mui/material/Grid"
 import Typography from "@mui/material/Typography"
 import Box from "@mui/material/Box"
-import AlertTitle from "@mui/material/AlertTitle"
-import Stack from "@mui/material/Stack"
-import Alert from "@mui/material/Alert"
-
-import { lightBlue, grey } from "@mui/material/colors"
 import { useTheme } from "@mui/material/styles"
 
 import styles from "./CalendarComponent.module.css"
@@ -22,7 +17,7 @@ const CalendarComponent = () => {
 	const theme = useTheme()
 	const [weeks, setWeeks] = useState([])
 
-	const { datesList } = useDatesList()
+	const { datesList, selectedDate } = useDatesList()
 
 	useEffect(() => {
 		setWeeks(splitIntoWeeks(datesList))
@@ -62,10 +57,12 @@ const CalendarComponent = () => {
 						<Grid container spacing={0}>
 							{week.map((day, dayIndex) => (
 								<WeekDay
+									key={`big-calendar-line-week-${weekIndex}-day-${dayIndex}`}
 									day={day}
 									dayIndex={dayIndex}
 									weekIndex={weekIndex}
 									className={styles.calendar_weekday_cell}
+									selectedDate={selectedDate}
 								/>
 							))}
 						</Grid>

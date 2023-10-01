@@ -23,7 +23,7 @@ const example_local_db = {
 	},
 }
 
-const formatDate = (day, month, year) => `${day}_${month}_${year}`
+const formatDate = (day, month, year) => `${year}_${month}_${day}`
 
 export const createEvent = (eventData) => {
 	let localDB = {}
@@ -61,7 +61,9 @@ export const getEventsByDay = ({ day, month, year }) => {
 
 	const date = formatDate(day, month, year)
 
-	return eventDB[date]
+	if (!eventDB[date]) return false
+
+	return Object.values(eventDB[date])
 }
 
 export const updateEvent = (eventData) => {
