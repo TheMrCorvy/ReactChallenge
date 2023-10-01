@@ -1,20 +1,6 @@
 import { useState, useEffect } from "react"
 
-const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
-const monthsOfYear = [
-	"January",
-	"February",
-	"March",
-	"April",
-	"May",
-	"June",
-	"July",
-	"August",
-	"September",
-	"October",
-	"November",
-	"December",
-]
+import { daysOfWeek, monthsOfYear } from "../helper/constants"
 
 const getDatesInReverse = (year, month, amountOfDays) => {
 	const lastDayOfMonth = new Date(year, month, 0).getDate()
