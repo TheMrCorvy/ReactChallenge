@@ -19,6 +19,7 @@ import useDatesList from "../../hooks/useDatesList"
 import MiniCalendar from "../MiniCalendar"
 
 import { createEvent, updateEvent } from "../../services/eventServices"
+import timeOptions from "../../helper/timeOptions"
 
 const DrawerMenu = ({ eventData }) => {
 	const { open } = useSelector((state) => state.open)
@@ -112,16 +113,6 @@ const DrawerMenu = ({ eventData }) => {
 		})
 	}
 
-	const timeOptions = (interval) =>
-		Array.from(Array(24).keys()).reduce((time, hour) => {
-			Array.from(Array(60 / interval).keys()).map((i) => {
-				const timeItem = (+(hour + "." + i * interval)).toFixed(2).replace(".", ":")
-				time.push(timeItem)
-				return null
-			})
-			return time
-		}, [])
-
 	return (
 		<Drawer
 			anchor="left"
@@ -168,7 +159,7 @@ const DrawerMenu = ({ eventData }) => {
 									value={option}
 									key={`small-calendar-time-picker-${optionIndex}`}
 								>
-									{option} Hs
+									{option}
 								</MenuItem>
 							))}
 						</Select>
