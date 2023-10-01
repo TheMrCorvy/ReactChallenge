@@ -74,6 +74,9 @@ const DrawerMenu = ({ eventData }) => {
 	}
 
 	const handleSubmit = () => {
+		if (eventInfo.city.length <= 0 || eventInfo.description.length <= 0) return
+		if (eventInfo.city.length > 30 || eventInfo.description.length > 30) return
+
 		if (eventData) {
 			updateEvent({
 				...eventInfo,
