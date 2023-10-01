@@ -63,7 +63,7 @@ export const getEventsByDay = ({ day, month, year }) => {
 
 	if (!eventDB[date]) return false
 
-	return Object.values(eventDB[date])
+	return eventDB[date]
 }
 
 export const updateEvent = (eventData) => {

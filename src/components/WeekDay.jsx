@@ -42,7 +42,7 @@ const WeekDay = ({ day, dayIndex, className }) => {
 			year: day.year,
 		})
 
-		if (eventsArr && eventsArr[0].date.month === day.month) {
+		if (eventsArr && Object.values(eventsArr)[0].date.month === day.month) {
 			setTodaysEvents(eventsArr)
 		}
 	}, [dayIndex])
