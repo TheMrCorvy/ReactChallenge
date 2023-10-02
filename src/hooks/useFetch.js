@@ -12,7 +12,13 @@ const useFetch = (url) => {
 
 		fetch(url, { signal: abortController.signal })
 			.then((response) => response.json())
-			.then((json) => setData(json))
+			.then((json) => {
+				if (json.cod === 200) {
+					setData(json)
+				} else {
+					setError(json.cod + " " + json.message)
+				}
+			})
 			.catch((error) => {
 				if (error.name === "AbortError") {
 					console.log("Cancelled request")

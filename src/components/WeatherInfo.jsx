@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useEffect } from "react"
 
 import Typography from "@mui/material/Typography"
 import Skeleton from "@mui/material/Skeleton"
@@ -12,8 +12,6 @@ const WeatherInfo = ({ city, date }) => {
 	const apiKey = process.env.REACT_APP_OPEN_WEATHER_API_KEY
 	const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`
 	const { data, loading, error, handleCancelRequest } = useFetch(url)
-
-	useEffect(() => error && console.log(error.message), [error])
 
 	useEffect(() => {
 		return () => handleCancelRequest()
@@ -56,7 +54,7 @@ const WeatherInfo = ({ city, date }) => {
 			{error && (
 				<Alert severity="error">
 					<AlertTitle>Error</AlertTitle>
-					{error.message}
+					{error.message ? error.message : error}
 				</Alert>
 			)}
 		</>
