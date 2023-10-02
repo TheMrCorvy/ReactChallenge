@@ -5,10 +5,14 @@ import Calendar from "../pages/Calendar"
 
 function routes() {
 	return (
-		<BrowserRouter>
+		<BrowserRouter basename={process.env.REACT_APP_BASE_URL}>
 			<Routes>
 				<Route exact path="/" element={<App />} />
-				<Route exact path="/calendar" element={<Calendar />} />
+				<Route
+					exact
+					path={process.env.REACT_APP_BASE_PATH + "/calendar"}
+					element={<Calendar />}
+				/>
 			</Routes>
 		</BrowserRouter>
 	)
