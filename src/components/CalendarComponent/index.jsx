@@ -68,7 +68,7 @@ const CalendarComponent = () => {
 						<Grid container spacing={0}>
 							{week.map((day, dayIndex) => (
 								<WeekDay
-									key={`big-calendar-line-week-${weekIndex}-day-${dayIndex}`}
+									key={`big-calendar-line-week-${weekIndex}-day-${dayIndex}-${day.number}`}
 									day={day}
 									dayIndex={dayIndex}
 									weekIndex={weekIndex}

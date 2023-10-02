@@ -87,7 +87,7 @@ const WeekDay = ({ day, dayIndex, className }) => {
 		if (eventsObj && Object.values(eventsObj)[0].date.month === day.month) {
 			setTodaysEvents(sortEventsByTime(Object.values(eventsObj)))
 		}
-	}, [dayIndex])
+	}, [day])
 
 	const dispatchOpenDielog = () => {
 		if (!todaysEvents) return
