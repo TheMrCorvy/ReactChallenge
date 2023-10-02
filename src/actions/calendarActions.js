@@ -8,7 +8,7 @@ export const moveToNextMonth = () => {
 		type: MOVE_TO_NEXT_MONTH,
 	}
 }
-export const moveToPrevioustMonth = () => {
+export const moveToPreviousMonth = () => {
 	return {
 		type: MOVE_TO_PREVIOUS_MONTH,
 	}
