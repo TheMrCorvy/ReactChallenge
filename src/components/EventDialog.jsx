@@ -1,4 +1,4 @@
-import { useEffect, forwardRef, useState } from "react"
+import { useEffect, forwardRef, useState, Fragment } from "react"
 
 import { useSelector, useDispatch } from "react-redux"
 import { closeDialog } from "../actions/dialogActions"
@@ -26,6 +26,7 @@ import sortEventsByTime from "../helper/sortEventsByTime"
 import nthDay from "../helper/nthDay"
 
 import { monthsOfYear } from "../helper/constants"
+import WeatherInfo from "./WeatherInfo"
 
 const Transition = forwardRef(function Transition(props, ref) {
 	return <Slide direction="up" ref={ref} {...props} />
@@ -92,9 +93,10 @@ const EventDialog = () => {
 			<List>
 				{eventList &&
 					eventList.map((event, eventIndex) => (
-						<>
+						<Fragment
+							key={`list-tem-events-dialog-${eventIndex}-date-${event.date.day}`}
+						>
 							<ListItem
-								key={`list-tem-events-dialog-${eventIndex}-date-${event.date.day}`}
 								secondaryAction={
 									<>
 										<IconButton
@@ -120,10 +122,10 @@ const EventDialog = () => {
 								}}
 							>
 								<ListItemText primary={event.city} secondary={event.description} />
-								<ListItemText primary="The forecast for this date and city is as follows: Posisible raining, with 19ºC or 32ºF." />
 							</ListItem>
-							<Divider />
-						</>
+							<WeatherInfo city={event.city} date={event.date} />
+							<Divider sx={{ mt: 2 }} />
+						</Fragment>
 					))}
 			</List>
 		</Dialog>
