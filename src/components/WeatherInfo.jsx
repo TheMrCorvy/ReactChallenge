@@ -40,7 +40,7 @@ const WeatherInfo = ({ city, date }) => {
 						Feels like: {Math.round(data.main.feels_like)} ºC
 					</Typography>
 					<Typography sx={{ mx: 4 }} variant="body2">
-						Humidity: {data.main.humidity}
+						Humidity: {data.main.humidity}%
 					</Typography>
 					<Typography sx={{ mx: 4 }} variant="body2">
 						Wind: {data.wind.speed} Km/h
@@ -52,7 +52,7 @@ const WeatherInfo = ({ city, date }) => {
 			)}
 
 			{error && (
-				<Alert severity="error">
+				<Alert severity="error" sx={{ mx: 4 }}>
 					<AlertTitle>Error</AlertTitle>
 					{error.message ? error.message : error}
 				</Alert>
