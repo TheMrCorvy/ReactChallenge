@@ -2,10 +2,12 @@ import { Link } from "react-router-dom"
 
 import { useSelector, useDispatch } from "react-redux"
 import { moveToNextMonth, moveToPreviousMonth } from "../../actions/calendarActions"
+import { openDrawer } from "../../actions/drawerActions"
 
 import HomeIcon from "@mui/icons-material/Home"
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft"
 import ChevronRightIcon from "@mui/icons-material/ChevronRight"
+import AddIcon from "@mui/icons-material/Add"
 
 import AppBar from "@mui/material/AppBar"
 import Box from "@mui/material/Box"
@@ -65,6 +67,15 @@ export default function ButtonAppBar() {
 							color="inherit"
 						>
 							<ChevronRightIcon />
+						</IconButton>
+					</Tooltip>
+					<Tooltip title="Add Event">
+						<IconButton
+							onClick={() => dispatch(openDrawer())}
+							size="large"
+							color="inherit"
+						>
+							<AddIcon />
 						</IconButton>
 					</Tooltip>
 				</Toolbar>
