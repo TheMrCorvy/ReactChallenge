@@ -39,7 +39,7 @@ const WeatherInfo = ({ city, date }) => {
 						Temperature: {Math.round(data.main.temp)} ºC
 					</Typography>
 					<Typography sx={{ mx: 4 }} variant="body2">
-						Feels like: {Math.round(data.main.feels_like)}
+						Feels like: {Math.round(data.main.feels_like)} ºC
 					</Typography>
 					<Typography sx={{ mx: 4 }} variant="body2">
 						Humidity: {data.main.humidity}
