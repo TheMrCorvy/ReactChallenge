@@ -4,6 +4,7 @@
 
 -   Run `npm install` | `yarn install` to install all dependencies.
 -   Run `npm start` | `yarn run` to run the app locally.
+-   Run `cp .env.example .env.local` to add the API key to the app environment.
 -   You can find the project running on `localhost:3000`.
 
 ## How to use the calendar
@@ -23,10 +24,73 @@ To edit an event, you can click on the day that the event is going to happen, an
 
 To delete an event, it's the same process.
 
-Regarding the weather forecast api call, I didn't have much time left to include it, but I did make the useApi hook mainly to demonstrate how I usually integrate with APIs.
+Regarding the weather forecast api call, the "query by 30 days" option was paid, so I couldn't implement it in that way, but the app does get the current weather info based on the city of the event..
+
+About the unit/feature testing, I didn't have much time left so I couldn't implement it.
 
 ## Folder structure
 
 Usually what I try to do to keep all the components organized is to create a folder with the name of the component, for example "CalendarComponent".
 
 This folder should include everything that is related to the component. From unit tests (named as "ComponentName.test.jsx") to styles with css modules, and custom hooks that aren't being used outside of the component.
+
+## Interfaces and Types
+
+Since this app doesn't include TypeScript there may be some errors with the typing. To prevent that I'll leave the 3 interfaces that I think are the most important:
+
+### Events that are stored in the localStorage:
+
+(Keep in mind that months are counted from 0)
+
+```
+{
+	"2023_0_1": {
+		"14:30": {
+			date: {
+				day: 1,
+				month: 0,
+				year: 2023,
+			},
+			time: "14:30",
+			city: "buenos aires",
+			description: "",
+		},
+		"15:00": {
+			date: {
+				day: 1,
+				month: 0,
+				year: 2023,
+			},
+			time: "15:00",
+			city: "buenos aires",
+			description: "",
+		},
+	},
+}
+```
+
+### eventData
+
+```
+{
+    city: "Buenos Aires",
+    description: "Description of the event",
+    time: "14:00",
+    date: {
+        day: Date,
+        month: 0,
+        year: 2023
+    }
+}
+```
+
+### day (from datesList / useDatesList)
+
+```
+{
+    number: 1,
+    dayLabel: "Monday",
+    month: 0,
+    year: 2023,
+}
+```
