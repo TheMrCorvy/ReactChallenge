@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react"
 
+import { useSelector } from "react-redux"
+
 import Container from "@mui/material/Container"
 import Grid from "@mui/material/Grid"
 import Typography from "@mui/material/Typography"
@@ -16,12 +18,21 @@ import WeekDay from "../WeekDay"
 const CalendarComponent = () => {
 	const theme = useTheme()
 	const [weeks, setWeeks] = useState([])
+	const calendar = useSelector((state) => state.calendar)
 
-	const { datesList, selectedDate } = useDatesList()
+	const { datesList, selectedDate, setSelectedDate } = useDatesList()
 
 	useEffect(() => {
 		setWeeks(splitIntoWeeks(datesList))
 	}, [datesList])
+
+	useEffect(() => {
+		setSelectedDate({
+			currentDate: calendar.currentDate,
+			currentMonth: calendar.currentMonth,
+			currentYear: calendar.currentYear,
+		})
+	}, [calendar])
 
 	return (
 		<Container
