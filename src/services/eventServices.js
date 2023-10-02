@@ -1,5 +1,5 @@
 const example_local_db = {
-	"1_0_2023": {
+	"2023_0_1": {
 		"14:30": {
 			date: {
 				day: 1,
