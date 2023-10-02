@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 
-export function useFetch(url, method = "GET", { headers, body } = null) {
+const useFetch = (url) => {
 	const [data, setData] = useState(null)
 	const [loading, setLoading] = useState(true)
 	const [error, setError] = useState(null)
@@ -10,26 +10,7 @@ export function useFetch(url, method = "GET", { headers, body } = null) {
 		const abortController = new AbortController()
 		setController(abortController)
 
-		if ((method === "POST" || method === "PUT") && !body) {
-			setError("The request is incorrectly built")
-			return
-		}
-
-		const reqObject = { signal: abortController.signal, method }
-
-		if (body) {
-			reqObject.body = body
-		}
-
-		if (headers) {
-			reqObject.headers = headers
-		} else {
-			reqObject.headers = {
-				"Content-Type": "application/json",
-			}
-		}
-
-		fetch(url, reqObject)
+		fetch(url, { signal: abortController.signal })
 			.then((response) => response.json())
 			.then((json) => setData(json))
 			.catch((error) => {
@@ -53,3 +34,5 @@ export function useFetch(url, method = "GET", { headers, body } = null) {
 
 	return { data, loading, error, handleCancelRequest }
 }
+
+export default useFetch
