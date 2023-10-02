@@ -17,7 +17,6 @@ const drawerReducer = (state = initialState, action) => {
 			return {
 				...state,
 				open: false,
-				eventData: null,
 			}
 		case OPEN_DRAWER_WITH_DATA:
 			return {

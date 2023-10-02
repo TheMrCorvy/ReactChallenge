@@ -47,18 +47,18 @@ const WeekDay = ({ day, dayIndex, className }) => {
 			return
 		}
 
-		if (!todaysEvents) {
-			setTodaysEvents([calendar.eventData])
+		const eventsObj = getEventsByDay({
+			day: eventDay,
+			month: eventMonth,
+			year: eventYear,
+		})
+
+		if (eventsObj && Object.values(eventsObj)[0].date.month === day.month) {
+			setTodaysEvents(sortEventsByTime(Object.values(eventsObj)))
 			return
 		}
 
-		if (todaysEvents && todaysEvents.find((event) => event.time === calendar.eventData.time)) {
-			return
-		}
-
-		let newEventsArr = [...todaysEvents]
-		newEventsArr.push(calendar.eventData)
-		setTodaysEvents(sortEventsByTime(newEventsArr))
+		setTodaysEvents(false)
 	}, [calendar])
 
 	useEffect(() => {

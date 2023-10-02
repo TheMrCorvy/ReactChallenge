@@ -3,6 +3,7 @@ import { useEffect, forwardRef, useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { closeDialog } from "../actions/dialogActions"
 import { openDrawerWithData } from "../actions/drawerActions"
+import { updateCalendar } from "../actions/calendarActions"
 
 import Button from "@mui/material/Button"
 import Dialog from "@mui/material/Dialog"
@@ -20,7 +21,7 @@ import Slide from "@mui/material/Slide"
 import EditIcon from "@mui/icons-material/Edit"
 import DeleteIcon from "@mui/icons-material/Delete"
 
-import { getEventsByDay } from "../services/eventServices"
+import { getEventsByDay, deleteEvent } from "../services/eventServices"
 import sortEventsByTime from "../helper/sortEventsByTime"
 import nthDay from "../helper/nthDay"
 
@@ -50,6 +51,12 @@ const EventDialog = () => {
 	const dispatchEditEvent = (eventData) => {
 		dispatch(closeDialog())
 		dispatch(openDrawerWithData(eventData))
+	}
+
+	const dispatchDeleteEvent = (eventData) => {
+		deleteEvent(eventData)
+		dispatch(closeDialog())
+		dispatch(updateCalendar(eventData))
 	}
 
 	return (
@@ -98,7 +105,12 @@ const EventDialog = () => {
 										>
 											<EditIcon />
 										</IconButton>
-										<IconButton edge="end" aria-label="delete" sx={{ mr: 3 }}>
+										<IconButton
+											edge="end"
+											aria-label="delete"
+											sx={{ mr: 3 }}
+											onClick={() => dispatchDeleteEvent(event)}
+										>
 											<DeleteIcon />
 										</IconButton>
 									</>
